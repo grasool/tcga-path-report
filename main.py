@@ -167,8 +167,8 @@ if __name__ == "__main__":
             pdf_file = pdf_files[i]
             pdf_file_full_path = os.path.join(pdf_path, pdf_file)
             print(f"Processing report {i} of {num_reports}. PDF file name:", pdf_file)
-            # extracted_data, report_ocr_text = process_pdfs(pdf_file_full_path, llm_model)
-            # json_variables = extract_json_output(extracted_data, llm_model)
+            extracted_data, report_ocr_text = process_pdfs(pdf_file_full_path, llm_model)
+            json_variables = extract_json_output(extracted_data, llm_model)
             json_variables['pdf_file_name_path'] = pdf_file
             json_variables['ocr_text'] = report_ocr_text
             json_variables['llm_output'] = extracted_data
