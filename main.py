@@ -27,7 +27,6 @@ from langchain_core.output_parsers import JsonOutputParser
 from langchain.prompts import PromptTemplate
 from langchain_core.pydantic_v1 import BaseModel, Field
 
-import pandas as pd
 import json
 
 import subprocess
@@ -39,18 +38,6 @@ class path_variables(BaseModel):
     stage: str = Field(description="stage of the cancer as described in the pathology report") 
     grade: str = Field(description="grade of the cancer as described in the pathology report")
     behavior: str = Field(description="behavior of the cancer as described in the pathology report")
-
-
-
-def load_random_pdfs(folder_path, num_files):
-    # Get a list of all PDF files in the sub-folders and sub-subfolders
-    pdf_files = glob.glob(os.path.join(folder_path, '**/*.pdf'), recursive=True)
-
-    # Select a given number of PDF files randomly
-    random_files = random.sample(pdf_files, num_files)
-
-    return random_files
-
 
 
 
@@ -86,14 +73,14 @@ def process_pdfs(pdf_file_to_open, llm_model):
     pages = loader.load()
     report = ' '.join(page.page_content for page in pages)
     
-    print("------------------------------------------------------------------------------------------------------")
-    print("------------------------------------------------------------------------------------------------------")
-    print("Input report after OCR:")
-    print("------------------------------------------------------------------------------------------------------")
-    print("------------------------------------------------------------------------------------------------------")
-    print(report)
-    print("------------------------------------------------------------------------------------------------------")
-    print("------------------------------------------------------------------------------------------------------")
+    # print("------------------------------------------------------------------------------------------------------")
+    # print("------------------------------------------------------------------------------------------------------")
+    # print("Input report after OCR:")
+    # print("------------------------------------------------------------------------------------------------------")
+    # print("------------------------------------------------------------------------------------------------------")
+    # print(report)
+    # print("------------------------------------------------------------------------------------------------------")
+    # print("------------------------------------------------------------------------------------------------------")
 
     llm_input_report = prompt_template.format_messages(report=report)
     extracted_data = chat.invoke(llm_input_report)
@@ -142,69 +129,44 @@ def extract_json_output(extracted_report_data, model):
 
 
 if __name__ == "__main__":
-    
 
-    # folder_path = r'C:\Users\4475358\OneDrive - Moffitt Cancer Center\Moffitt\Datasets\Pathology Reports'
-    # num_files = 1
-    # pdf_files = load_random_pdfs(folder_path, num_files)
-    
-    
-    # pdf_files = [r'C:\Users\4475358\OneDrive - Moffitt Cancer Center\Moffitt\Datasets\Pathology Reports\failures\TCGA-59-A5PD.pdf']
-    # pdf_files = [r'D:\Works\SomeCodes\path-reports-variables\somereports\brain-1.pdf']
-    # pdf_files = [r'D:\Works\SomeCodes\path-reports-variables\somereports\Kidney-2.pdf']
-    
-    
-    # pdf_files = [r'D:\Works\SomeCodes\path-reports-variables\somereports\lung-1.pdf']
-    # pdf_files = [r'D:\Works\SomeCodes\path-reports-variables\somereports\colon-1.pdf']
-    # pdf_files = [r'D:\Works\SomeCodes\path-reports-variables\somereports\Uterus.pdf']
-    pdf_files = [r'D:\Works\SomeCodes\path-reports-variables\somereports\kidney.pdf']
-    print('Processing:', pdf_files)
-    
+    # Get a list of all pdfs in the folder
+    pdf_path = r'D:\Data\Public Datasets\Pathology Reports\Pathology Reports - BLADDER\pdfs'
+    pdf_files = os.listdir(pdf_path)    
+
     num_reports = len(pdf_files)
+    print('We are processing a total of:', num_reports)
 
     # mistra, mixtral, gemma, command-r, llama3,  llama3:70b
     #llm_model = 'llama3:8b-instruct-q6_K'
     llm_model = "mixtral"
 
-
-    print('We are processing a total of:', num_reports)
-
-    #extracted_data_all = []
-    #ids = []
     json_objects = []
 
     for i in range(num_reports):
-        #pat_id = os.path.splitext(pdf_files[i])[0]
+        if i == 2: break
         pdf_file = pdf_files[i]
-        extracted_data, report_ocr_text = process_pdfs(pdf_file, llm_model)
+        pdf_file_full_path = os.path.join(pdf_path, pdf_file)
+        extracted_data, report_ocr_text = process_pdfs(pdf_file_full_path, llm_model)
         
-       
         json_variables = extract_json_output(extracted_data, llm_model)
         json_variables['pdf_file_name_path'] = pdf_file
         json_variables['ocr_text'] = report_ocr_text
         json_variables['llm_output'] = extracted_data
-        #print("------------------------------------------------------------------------------------------------------")
+        print("------------------------------------------------------------------------------------------------------")
         print("Second Stage Processing - Discrete Variables:") 
         print("------------------------------------------------------------------------------------------------------")
         print("------------------------------------------------------------------------------------------------------")
         print(json.dumps(json_variables, indent=4))
         json_objects.append(json_variables)
-        #extracted_data_all.append(extracted_data)
-        #subprocess.Popen([pdf_file],shell=True)
-        #ids.append(pat_id)
+
  
-    
-    
-    # Create a new DataFrame
-    # new_df = pd.DataFrame()
+    # Save json_objects to a JSON file
+with open('BLADDER.json', 'w') as f:
+    json.dump(json_objects, f, indent=4)
 
-    #new_df['case_submitter_id'] = ids
-    #new_df['llm_output'] = pd.Series(extracted_data_all)
+# Convert list of JSON objects to DataFrame
+df = pd.json_normalize(json_objects)
 
-    # Save the DataFrame to a CSV file
-    # save_file_name = llm_model + '_variables-from-PDFs.csv'
-    # new_df.to_csv(save_file_name, index=False)
-    
-    # save_file_name = llm_model + '_variables-from-PDFs.json'
-    # with open(save_file_name, 'w') as f:
-    #     json.dump(json_objects, f, indent=4)
+# Save DataFrame to CSV
+df.to_csv('BLADDER.csv', index=False)

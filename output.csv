@@ -1,0 +1,48 @@
+site,laterality,histology,stage,grade,behavior,pdf_file_name_path,ocr_text,llm_output
+Right kidney,Right,"Renal cell carcinoma, conventional (clear) cell type",pT1a NX MX,Grade II (Intermediate grade or moderately differentiated),Malignant,D:\Works\SomeCodes\path-reports-variables\somereports\kidney.pdf,"· ....,. .. _."".1 .. """"""._1""1. 
+No clinical history is given. 
+PRE-OP DIAGNOSIS: Right kidney mass. 
+POST-OP DIAGNOSIS: Same. 
+~EDURE: Right nephrectomy. 
+FINAL DIAGNOSIS: 
+KIDNEY, RIGHT, NEPHRECTOMY-
+A. RENAL CELL CARCINOMA, CONVENTIONAL (CLEAR) CELL TYPE 
+B. FUHRMAN'S NUCLEAR GRADE IS 2 OF 4 
+C. THE GREATEST DIAMETER OF THE NEOPLASM IS 4 CM. 
+D. THE NEOPLASM IS CONFINED WITHIN THE RENAL CAPSULE 
+E. NO INVASION OF THE RENAL VEIN IS IDENTIFIED 
+F. NO EVIDENCE OF ANGIOLYMPHATIC INVASION IS IDENTIFIED. 
+G. ALL SURGICAL MARGINS ARE FREE OF THE NEOPLASM 
+H. THE NON-NEOPLASTIC KIDNEY IS UNREMARKABLE 
+I. THE ADRENAL GLAND IS UNREMARKABLE 
+J. TNM STAGE: pTle Nx MX. 
+HISTOLOGIC. GRADE = G2. 
+A panel of immunohistochemical stains has been perfonned, which showed the tumor cells to be strongly positive for 
+COlO, and weakly positive for RCC and E-cadherln. Tumor cells are focally positive for cytokeratin 7 and negative for Ber­
+EP4. A colloidal iron stain was also negative. This staining pattern supports a diagnosis of conventional type renal cell 
+carcinoma. 
+CASE SYNOPSIS: 
+SYNOPTIC DATA -PRIMARY KIDNEY TUMORS 
+SPECIMEN TYPE: Radical nephrectomy 
+LATERALITY: Right 
+TUMOR SITE: Middle 
+FOCALlTY: Unifocal 
+TUMOR SIZE: Greatest dimension: 4.0 cm 
+Additional dimensions: 3.5 cm 
+MACROSCOPIC EXTENT OF TUMOR: Tumor limited to kidney 
+HISTOLOGIC TYPE: Clear cell (conventional) renal carcinoma 
+HISTOLOGIC GRADE (Fuhrman Nuclear Grade): G2 
+PATHOLOGIC STAGING (pTNM): pT1a 
+pNX 
+Number of regional lymph nodes examined: 0 
+pMX 
+MARGINS: Margins uninvolved by invasive carcinoma 
+ADRENAL GLAND: Uninvolved by tumor 
+VENOUS (LARGE VESSEL) INVASION (V): Absent 
+LYMPHATIC (SMALL VESSEL) INVASION (L): Absent 
+ADDITIONAL PATHOLOGIC FINDINGS: Glomerular disease (type): Minimal global glomerusclerosis "," 1. ""Site"": Right kidney. Justified as the report clearly mentions the tumor is located in the right kidney.
+2. ""Laterality"": Right. As mentioned above, the tumor is located in the right kidney.
+3. ""Histology"": Renal cell carcinoma, conventional (clear) cell type. This is specified in the report as the final diagnosis.
+4. ""Stage"": pT1a NX MX. The tumor is confined within the renal capsule and does not invade the renal vein or any lymphatic vessels. The report also mentions no regional lymph nodes were examined.
+5. ""Grade"": Grade II (Intermediate grade or moderately differentiated). The report states the Fuhrman's nuclear grade is 2 of 4, which corresponds to Grade II.
+6. ""Behavior"": Malignant. This is inherent in the diagnosis of carcinoma."
