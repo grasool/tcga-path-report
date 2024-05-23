@@ -162,22 +162,24 @@ if __name__ == "__main__":
     report_ocr_text = []
 
     for i in range(num_reports):
-        # if i == 2: break
-        pdf_file = pdf_files[i]
-        pdf_file_full_path = os.path.join(pdf_path, pdf_file)
-        print(f"Processing report {i} of {num_reports}. PDF file name:", pdf_file)
-        # extracted_data, report_ocr_text = process_pdfs(pdf_file_full_path, llm_model)
-        # json_variables = extract_json_output(extracted_data, llm_model)
-        json_variables['pdf_file_name_path'] = pdf_file
-        json_variables['ocr_text'] = report_ocr_text
-        json_variables['llm_output'] = extracted_data
-        # print("------------------------------------------------------------------------------------------------------")
-        # print("Second Stage Processing - Discrete Variables:") 
-        # print("------------------------------------------------------------------------------------------------------")
-        # print("------------------------------------------------------------------------------------------------------")
-        # print(json.dumps(json_variables, indent=4))
-        json_objects.append(json_variables)
-
+        try:
+            # if i == 2: break
+            pdf_file = pdf_files[i]
+            pdf_file_full_path = os.path.join(pdf_path, pdf_file)
+            print(f"Processing report {i} of {num_reports}. PDF file name:", pdf_file)
+            # extracted_data, report_ocr_text = process_pdfs(pdf_file_full_path, llm_model)
+            # json_variables = extract_json_output(extracted_data, llm_model)
+            json_variables['pdf_file_name_path'] = pdf_file
+            json_variables['ocr_text'] = report_ocr_text
+            json_variables['llm_output'] = extracted_data
+            # print("------------------------------------------------------------------------------------------------------")
+            # print("Second Stage Processing - Discrete Variables:") 
+            # print("------------------------------------------------------------------------------------------------------")
+            # print("------------------------------------------------------------------------------------------------------")
+            # print(json.dumps(json_variables, indent=4))
+            json_objects.append(json_variables)
+        except Exception as e:
+            print(f"An error occurred while processing file {pdf_file}: {e}")
  
     # Save json_objects to a JSON file
 json_flle_name = cancer_names[cancer_index] + '.json'
