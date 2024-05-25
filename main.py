@@ -143,7 +143,7 @@ if __name__ == "__main__":
         raise ValueError(f"Invalid cancer index. Expected a number between 0 and {len(cancer_names) - 1}")
 
     # Get a list of all pdfs in the folder
-    pdf_path_1 = r'D:\Data\Public Datasets\Pathology Reports'
+    pdf_path_1 = '../path-reports'
     pdf_path_2 = cancer_names[cancer_index]
     pdf_path = os.path.join(pdf_path_1, pdf_path_2, "pdfs")
     
@@ -172,23 +172,30 @@ if __name__ == "__main__":
             json_variables['pdf_file_name_path'] = pdf_file
             json_variables['ocr_text'] = report_ocr_text
             json_variables['llm_output'] = extracted_data
-            # print("------------------------------------------------------------------------------------------------------")
-            # print("Second Stage Processing - Discrete Variables:") 
-            # print("------------------------------------------------------------------------------------------------------")
-            # print("------------------------------------------------------------------------------------------------------")
-            # print(json.dumps(json_variables, indent=4))
             json_objects.append(json_variables)
         except Exception as e:
             print(f"An error occurred while processing file {pdf_file}: {e}")
- 
-    # Save json_objects to a JSON file
-json_flle_name = cancer_names[cancer_index] + '.json'
-with open(json_flle_name, 'w') as f:
-    json.dump(json_objects, f, indent=4)
+        # Save json_objects to a JSON file and CSV file every 100 reports
+        if (i + 1) % 100 == 0:
+            try:
+                json_file_name = f"{cancer_names[cancer_index]}_{i+1}.json"
+                with open(json_file_name, 'w') as f:
+                    json.dump(json_objects, f, indent=4)
 
-# Convert list of JSON objects to DataFrame
-csv_flle_name = cancer_names[cancer_index] + '.csv'
-df = pd.json_normalize(json_objects)
+                csv_file_name = f"{cancer_names[cancer_index]}_{i+1}.csv"
+                df = pd.json_normalize(json_objects)
+                df.to_csv(csv_file_name, index=False)
+            except Exception as e:
+                print(f"An error occurred while saving files: {e}")
+            
 
-# Save DataFrame to CSV
-df.to_csv(csv_flle_name, index=False)
+try:
+    json_file_name = cancer_names[cancer_index] + '.json'
+    with open(json_file_name, 'w') as f:
+        json.dump(json_objects, f, indent=4)
+
+    csv_file_name = cancer_names[cancer_index] + '.csv'
+    df = pd.json_normalize(json_objects)
+    df.to_csv(csv_file_name, index=False)
+except Exception as e:
+    print(f"An error occurred while saving files: {e}")
