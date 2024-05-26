@@ -144,7 +144,7 @@ if __name__ == "__main__":
 
     # Get a list of all pdfs in the folder
     #pdf_path_1 = '../path-reports'
-    pdf_path_1 = r'D:\Data\Public Datasets\Pathology Reports'
+    pdf_path_1 = r'D:\Data\Public Datasets\TCGA Pathology Reports'
     pdf_path_2 = cancer_names[cancer_index]
     pdf_path = os.path.join(pdf_path_1, pdf_path_2, "pdfs")
     
